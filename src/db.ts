@@ -35,7 +35,7 @@ export function getPool(): pg.Pool {
 /**
  * Execute a query with parameters
  */
-export async function query<T = any>(text: string, params?: any[]): Promise<pg.QueryResult<T>> {
+export async function query<T extends pg.QueryResultRow = any>(text: string, params?: any[]): Promise<pg.QueryResult<T>> {
   const pool = getPool();
   const start = Date.now();
   const result = await pool.query<T>(text, params);
@@ -47,7 +47,7 @@ export async function query<T = any>(text: string, params?: any[]): Promise<pg.Q
 /**
  * Get a single row
  */
-export async function queryOne<T = any>(text: string, params?: any[]): Promise<T | null> {
+export async function queryOne<T extends pg.QueryResultRow = any>(text: string, params?: any[]): Promise<T | null> {
   const result = await query<T>(text, params);
   return result.rows[0] || null;
 }
