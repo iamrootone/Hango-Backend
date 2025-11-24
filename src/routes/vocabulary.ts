@@ -3,7 +3,11 @@ import type { WordProgress } from '../types/index.js';
 import { verifyJWT } from '../utils/jwt.js';
 import { query, queryOne } from '../db.js';
 
-const vocabulary = new Hono();
+type Variables = {
+  userId: string;
+};
+
+const vocabulary = new Hono<{ Variables: Variables }>();
 
 // Middleware to verify authentication
 vocabulary.use('*', async (c, next) => {
